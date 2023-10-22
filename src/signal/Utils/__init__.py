@@ -6,7 +6,7 @@ from os import mkdir
 # 取得時間並建立資料夾
 def root_path():
     # path = 'result/' + time.strftime('%Y%m%d-%H%M%S', time.localtime()) + '/'
-    path = '/home/ailab/new_robot_ws/src/mir_robot/signal/result/' + time.strftime('%Y%m%d-%H%M%S', time.localtime()) + '/'
+    path = '/home/ailab120/catkin_ws/src/signal/result/' + time.strftime('%Y%m%d-%H%M%S', time.localtime()) + '/'
     mkdir(path)
     return path
 

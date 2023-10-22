@@ -10,9 +10,9 @@ from matplotlib import pyplot as plt
 from Config.colorbar import *
 from Node import DataSaver, Painter
 from Node.Painter import colormap
-# from Sensors.simulation.lib import device ## simulation
+from Sensors.simulation.lib import device ## simulation
 # from Sensors.ms2721b.lib import device   ## device
-from Sensors.angle.lib import device   ## angle device
+# from Sensors.angle.lib import device   ## angle device
 
 from Utils import timeit, root_path
 from Utils.Alert import PLAY_mission_completed
@@ -30,8 +30,8 @@ colormap = LinearSegmentedColormap.from_list('cmap_name', colors, N=1000)
 
 # list of data
 x, y, data = [], [], []
-data_all = []
-old_map2d = []
+# data_all = []
+# old_map2d = []
 
 if __name__ == '__main__':
     # initialize node
@@ -49,7 +49,7 @@ if __name__ == '__main__':
 
     # 建立儲存資料夾
     path = root_path()
-    i=0
+    # i=0
 
     # 計算測量時間、初始化儀控
     with timeit(), device() as sensor:  # init sensor
@@ -64,14 +64,14 @@ if __name__ == '__main__':
                     rospy.loginfo('Translation: ' + str(trans))
                     rospy.loginfo('Rotation: ' + str(rot))
                     power = sensor.read_power()
-                    # rospy.loginfo('Power: ' + str(power))
-                    rospy.loginfo('Angle: ' + str(power))
+                    rospy.loginfo('Power: ' + str(power))
+                    # rospy.loginfo('Angle: ' + str(power))
                     bot_y, bot_x = trans[1], trans[0]
                     y.append(bot_y)
                     x.append(bot_x)
                     data.append(power)
-                    data_all.append(power)
-                    print(f'({x[-1]:.3f}, {y[-1]:.3f}): {data[-1]:.3f}')
+                    # data_all.append(power)
+                    # print(f'({x[-1]:.3f}, {y[-1]:.3f}): {data[-1]:.3f}')
 
 
                     # if i!=0 and len(map2d)!=0:
@@ -111,8 +111,8 @@ if __name__ == '__main__':
                     font_size = min(sizeX, sizeY)
                     ax = hmap(map2d,
                             annot=False, annot_kws={"fontsize": 15},  # 格子中的字
-                            # cmap=colormap, vmin=-80, vmax=-20,  # colorbar 設定
-                            cmap=colormap, vmin=-30, vmax=30,  # colorbar 設定
+                            cmap=colormap, vmin=-80, vmax=-20,  # colorbar 設定
+                            # cmap=colormap, vmin=-30, vmax=30,  # colorbar 設定
                             square=True,
                             cbar_kws={
                                 'label': 'Power'

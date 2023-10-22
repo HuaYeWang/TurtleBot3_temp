@@ -58,8 +58,10 @@ class MapDrive(MarkerVisualization):
 		self.base_frame = rospy.get_param("~base_frame", "base_link")
 
 		rospy.Subscriber("/clicked_point", PointStamped, self.rvizPointReceived)
-		rospy.Subscriber("/move_base_node/global_costmap/costmap", OccupancyGrid, self.globalCostmapReceived)
-		rospy.Subscriber("/move_base_node/local_costmap/costmap", OccupancyGrid, self.localCostmapReceived)
+		# rospy.Subscriber("/move_base_node/global_costmap/costmap", OccupancyGrid, self.globalCostmapReceived)
+		# rospy.Subscriber("/move_base_node/local_costmap/costmap", OccupancyGrid, self.localCostmapReceived)
+		rospy.Subscriber("/move_base/global_costmap/costmap", OccupancyGrid, self.globalCostmapReceived)
+		rospy.Subscriber("/move_base/local_costmap/costmap", OccupancyGrid, self.localCostmapReceived)
 
 		self.tfBuffer = tf2_ros.Buffer()
 		listener = tf2_ros.TransformListener(self.tfBuffer)
@@ -68,7 +70,8 @@ class MapDrive(MarkerVisualization):
 		rospy.loginfo("Waiting for the move_base action server to come up")
 		self.move_base.wait_for_server()
 		#self.move_base_plan = rospy.ServiceProxy('/move_base_node/make_plan', GetPlan) #sim
-		self.move_base_plan = rospy.ServiceProxy('/move_base_node/NavfnROS/make_plan', GetPlan) # mir
+		# self.move_base_plan = rospy.ServiceProxy('/move_base_node/NavfnROS/make_plan', GetPlan) # mir
+		self.move_base_plan = rospy.ServiceProxy('/move_base/NavfnROS/make_plan', GetPlan) # mir
 		rospy.loginfo("Got move_base action server")
 		rospy.on_shutdown(self.on_shutdown)
 		#self.move_base.make_plan_clear_costmap = False
